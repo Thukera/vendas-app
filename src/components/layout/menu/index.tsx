@@ -8,7 +8,7 @@ export const Menu: React.FC = () => {
             </p>
             <ul className="menu-list">
                <MenuItem href="/" label="Home" />
-               <MenuItem href="/cadastro/produtos" label="Produtos" />
+               <MenuItem href='/consultas/produtos' label="Produtos" />
                <MenuItem href="/" label="Config" />
                <MenuItem href="/" label="Sair" />
             </ul>
@@ -25,10 +25,8 @@ interface MenuItemProps {
 const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
     return (
         <li>
-            <Link legacyBehavior href={props.href}>
-                <a>
+            <Link href={props.href}>
                     <span className="icon"></span> { props.label }
-                </a>
             </Link>
         </li>
     )
