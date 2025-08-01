@@ -3,45 +3,54 @@ import { formatReal } from "@/app/util/money";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string;
-    onChange?: (value: any) => void;
     label: string;
     columnClasses?: string;
-    currency?: boolean;
     error?: string;
+    formatter?: (value: string) => string;
 }
 
 
 export const Input: React.FC<InputProps> = ({
-    onChange,
     label,
     columnClasses,
     id,
-    currency,
     error,
+    formatter,
+    onChange,
     ...inputProps
 }: InputProps) => {
 
-    const onInputChange = (event : React.ChangeEvent<HTMLInputElement>) => {
-        let value = event.target.value;
+    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        const name = event.target.name;
 
-        if (value && currency) {
-            value = formatReal(value);
-        }
+        const formattedValue = (formatter && formatter(value)) || value;
 
-        if (onChange) {
-            onChange(value)
-        }
-    }
+        onChange?.({
+            ...event,
+            target: {
+                name,
+                value: formattedValue
+            }
+        } as React.ChangeEvent<HTMLInputElement>);
+    };
 
     return (
         <div className={`field column ${columnClasses}`}>
             <label className="label" htmlFor={id}>{label}</label>
             <div className="control">
                 <input className="input"
+                    onChange={onInputChange}
                     id={id} {...inputProps}
-                    onChange={ onInputChange } />
-                {error && <p className="help is-danger">{ error }</p>}
+                />
+                {error && <p className="help is-danger">{error}</p>}
             </div>
         </div>
+    )
+}
+
+export const InputMoney: React.FC<InputProps> = (props: InputProps) => {
+    return (
+        <Input {...props} formatter={formatReal}/>
     )
 }
