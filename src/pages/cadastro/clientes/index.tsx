@@ -1,3 +1,3 @@
-import { CadastroCliente } from 'components'
+ import { CadastroCliente } from 'components'
 
-export default CadastroCliente
+ export default CadastroCliente

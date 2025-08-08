@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Input, InputMoney, Layout, Message } from 'components';
 import { useProdutoService } from 'app/service'
 import { Produto } from 'app/models/produtos'
-import { converteEmBigDecimal, formatReal } from '@/app/util/money';
+import { converteEmBigDecimal, formatReal } from '@/app/util/masks';
 import { Alert } from '@/components/common/message';
 import * as yup from 'yup'
 import Link from 'next/link';

@@ -1,7 +1,8 @@
 import { Layout } from "@/components/layout"
 import { Cliente } from "@/app/models/produtos/clientes"
 import { useFormik } from 'formik'
-import { Input } from "@/components/common"
+import { Input , InputCPF} from "@/components/common"
+import { InputDate, InputPhone } from "@/components/common/input";
 
 
 interface ClierntFormProps {
@@ -29,8 +30,11 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
     const formik = useFormik<Cliente>({
         initialValues: { ...formScheme , ...cliente},
         onSubmit,
-
+        enableReinitialize: true,
     })
+
+    console.log("cliente: ", cliente);
+    console.log("Formil: ", formik.values);
 
     const caixaAlta = (value: string) => {
         return value.toUpperCase();
@@ -76,7 +80,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
             </div>
 
             <div className="columns">
-                <Input
+                <InputCPF
                     id="cpf"
                     name="cpf"
                     label="CPF: *"
@@ -86,7 +90,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     value={formik.values.cpf}
                 />
 
-                <Input
+                <InputDate
                     id="dataNascimento"
                     name="dataNascimento"
                     label="Data Nascimento: *"
@@ -120,7 +124,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     value={formik.values.email}
                 />
 
-                <Input
+                <InputPhone
                     id="telefone"
                     name="telefone"
                     label="Telefone: *"

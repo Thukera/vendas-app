@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout"
 import { Produto } from "@/app/models/produtos"
-import { formatReal } from '@/app/util/money';
+import { formatReal } from '@/app/util/masks';
 import { useState } from "react";
 
 interface TabelaProdutosProps {
