@@ -1,8 +1,8 @@
-import { Layout } from "@/components/layout"
 import { Cliente } from "@/app/models/produtos/clientes"
 import { useFormik } from 'formik'
-import { Input , InputCPF} from "@/components/common"
+import { Input, InputCPF } from "@/components/common"
 import { InputDate, InputPhone } from "@/components/common/input";
+import { validationScheme } from './validationSchema'
 
 
 interface ClierntFormProps {
@@ -22,23 +22,23 @@ const formScheme: Cliente = {
 
 }
 
+const caixaAlta = (value: string) => {
+    return value.toUpperCase();
+}
+
+// React Functional Component
 export const ClienteForm: React.FC<ClierntFormProps> = ({
     cliente,
     onSubmit
 }) => {
 
     const formik = useFormik<Cliente>({
-        initialValues: { ...formScheme , ...cliente},
+        initialValues: { ...formScheme, ...cliente },
         onSubmit,
         enableReinitialize: true,
+        validationSchema: validationScheme
     })
 
-    console.log("cliente: ", cliente);
-    console.log("Formil: ", formik.values);
-
-    const caixaAlta = (value: string) => {
-        return value.toUpperCase();
-    }
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -75,7 +75,9 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-full"
                     onChange={formik.handleChange}
+                    error={formik.errors.nome}
                     value={formik.values.nome}
+
                 />
             </div>
 
@@ -87,6 +89,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-half"
                     onChange={formik.handleChange}
+                    error={formik.errors.cpf}
                     value={formik.values.cpf}
                 />
 
@@ -97,6 +100,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-half"
                     onChange={formik.handleChange}
+                    error={formik.errors.dataNascimento}
                     value={formik.values.dataNascimento}
                 />
             </div>
@@ -109,6 +113,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-full"
                     onChange={formik.handleChange}
+                    error={formik.errors.endereco}
                     value={formik.values.endereco}
                 />
             </div>
@@ -121,6 +126,7 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-half"
                     onChange={formik.handleChange}
+                    error={formik.errors.email}
                     value={formik.values.email}
                 />
 
@@ -131,13 +137,14 @@ export const ClienteForm: React.FC<ClierntFormProps> = ({
                     autoComplete="off"
                     columnClasses="is-half"
                     onChange={formik.handleChange}
+                    error={formik.errors.telefone}
                     value={formik.values.telefone}
                 />
             </div>
             <div className="field is-grouped">
                 <div className="control is-link">
                     <button type="submit" className="button">
-                        { formik.values.id ? "Atualizar" : "Salvar" }
+                        {formik.values.id ? "Atualizar" : "Salvar"}
                     </button>
                 </div>
             </div>
